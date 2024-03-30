@@ -3,9 +3,12 @@ boto3==1.34.74
 botocore==1.34.74
 certifi==2024.2.2
 cffi==1.16.0
+cfgv==3.4.0
 charset-normalizer==3.3.2
+coverage==7.4.4
 cryptography==42.0.5
 decorator==4.4.2
+distlib==0.3.8
 dj-database-url==2.1.0
 Django==4.2.7
 django-anymail==10.3
@@ -17,7 +20,9 @@ djangorestframework==3.15.1
 djangorestframework-simplejwt==5.3.1
 drf-yasg==1.21.7
 environs==11.0.0
+filelock==3.13.3
 gunicorn==21.2.0
+identify==2.5.35
 idna==3.6
 imageio==2.34.0
 imageio-ffmpeg==0.4.9
@@ -25,9 +30,12 @@ inflection==0.5.1
 jmespath==1.0.1
 marshmallow==3.21.1
 moviepy==1.0.3
+nodeenv==1.8.0
 numpy==1.26.4
 packaging==24.0
 pillow==10.2.0
+platformdirs==4.2.0
+pre-commit==3.7.0
 proglog==0.1.10
 psycopg2-binary==2.9.9
 pycparser==2.21
@@ -47,3 +55,4 @@ typing_extensions==4.10.0
 tzdata==2024.1
 uritemplate==4.1.1
 urllib3==2.2.1
+virtualenv==20.25.1
