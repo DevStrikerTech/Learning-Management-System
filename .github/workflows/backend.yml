@@ -1,4 +1,4 @@
-name: LMS CI/CD
+name: LMS Backend CI/CD
 
 on:
   push:
@@ -30,6 +30,6 @@ jobs:
           pip install -r requirements.txt
       - name: Coverage report
         run: |
-          pip install coverage
+          cd backend
           coverage run manage.py test
           coverage report
