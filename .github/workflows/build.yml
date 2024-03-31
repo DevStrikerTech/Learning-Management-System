@@ -35,7 +35,7 @@ jobs:
           coverage report
       - name: Exclude pull requests from release notes
         run: |
-          git log --pretty=format:"- %s" $(git describe --tags --abbrev=0)..HEAD | grep -v 'Merge pull request'
+          git log --pretty=format:"- %s" $(git describe --tags --always)..HEAD | grep -v 'Merge pull request'
         shell: bash
       - name: Upload release asset
         id: upload-release-asset
