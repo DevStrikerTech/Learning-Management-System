@@ -1,4 +1,4 @@
-name: LMS Backend CI/CD
+name: LMS Build
 
 on:
   push:
@@ -33,3 +33,14 @@ jobs:
           cd backend
           coverage run manage.py test
           coverage report
+      - name: Exclude pull requests from release notes
+        run: |
+          git log --pretty=format:"- %s" $(git describe --tags --abbrev=0)..HEAD | grep -v 'Merge pull request'
+        shell: bash
+      - name: Upload release asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url}}
