@@ -29,6 +29,7 @@ imageio-ffmpeg==0.4.9
 inflection==0.5.1
 jmespath==1.0.1
 marshmallow==3.21.1
+mccabe==0.7.0
 moviepy==1.0.3
 nodeenv==1.8.0
 numpy==1.26.4
@@ -38,7 +39,9 @@ platformdirs==4.2.0
 pre-commit==3.7.0
 proglog==0.1.10
 psycopg2-binary==2.9.9
+pycodestyle==2.11.1
 pycparser==2.21
+pyflakes==3.2.0
 PyJWT==2.8.0
 python-dateutil==2.9.0.post0
 python-dotenv==1.0.1
