@@ -1,4 +1,4 @@
-name: LMS Backend CI/CD
+name: LMS Build
 
 on:
   push:

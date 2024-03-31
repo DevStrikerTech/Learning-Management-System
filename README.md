@@ -1,4 +1,4 @@
-[![atl-text-8](https://img.shields.io/badge/Version-4.2.7-blueviolet?logo=Django&style=flat)](https://www.djangoproject.com/) [![atl-text-1](https://img.shields.io/badge/Version-18-blue?logo=React&style=flat)](https://react.dev/) [![atl-text-2](https://img.shields.io/badge/Version-3.10.12-red?logo=Python&style=flat)](https://www.python.org/) ![atl-text-6](https://img.shields.io/badge/license-MIT-lightgrey) ![atl-text-7](https://img.shields.io/badge/coverage-94-green) [![LMS Build](https://github.com/DevStrikerTech/Learning-Management-System/actions/workflows/backend.yml/badge.svg)](https://github.com/DevStrikerTech/Learning-Management-System/actions/workflows/backend.yml)
+[![atl-text-8](https://img.shields.io/badge/Version-4.2.7-blueviolet?logo=Django&style=flat)](https://www.djangoproject.com/) [![atl-text-1](https://img.shields.io/badge/Version-18-blue?logo=React&style=flat)](https://react.dev/) [![atl-text-2](https://img.shields.io/badge/Version-3.10.12-red?logo=Python&style=flat)](https://www.python.org/) ![atl-text-6](https://img.shields.io/badge/license-MIT-lightgrey) ![atl-text-7](https://img.shields.io/badge/coverage-94-green) [![LMS Build](https://github.com/DevStrikerTech/Learning-Management-System/actions/workflows/build.yml/badge.svg)](https://github.com/DevStrikerTech/Learning-Management-System/actions/workflows/build.yml)
 
 # Learning Management System (LMS)
 
@@ -26,10 +26,13 @@ The Learning Management System (LMS) is a web application that facilitates onlin
 ## Getting Started
 
 1. **Clone the Repository**:
+
 ```
 git clone https://github.com/DevStrikerTech/Learning-Management-System.git
 ```
+
 2. **Backend Setup**:
+
 - Navigate to the `backend` directory.
 - Install dependencies:
   ```
@@ -45,6 +48,7 @@ git clone https://github.com/DevStrikerTech/Learning-Management-System.git
   ```
 
 3. **Frontend Setup**:
+
 - Navigate to the `frontend` directory.
 - Install dependencies:
   ```
@@ -54,21 +58,25 @@ git clone https://github.com/DevStrikerTech/Learning-Management-System.git
   ```
   npm start
   ```
+
 4. **Access the Application**:
+
 - Backend: http://localhost:8000
 - Frontend: http://localhost:3000
 
 ## Development Flow
 
 1. Create a new feature branch:
-git checkout -b feature/<issue-number>-<short-description>
+   git checkout -b feature/<issue-number>-<short-description>
 
 2. Develop the feature, committing atomic changes.
 
 3. Ensure tests pass:
+
 ```
 npm test
 ```
+
 4. Create a Pull Request and get feedback.
 
 5. After approval, merge into the `develop` branch.
