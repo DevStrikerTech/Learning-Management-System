@@ -80,7 +80,7 @@ class PasswordResetEmailVerifyAPIView(generics.RetrieveAPIView):
         return user
 
 
-class ChangePasswordAPIView(generics.CreateAPIView):
+class PasswordChangeAPIView(generics.CreateAPIView):
     """
     Custom view for changing user passwords.
 
