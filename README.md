@@ -26,10 +26,9 @@ The Learning Management System (LMS) is a web application that facilitates onlin
 ## Getting Started
 
 1. **Clone the Repository**:
-
-```
-git clone https://github.com/DevStrikerTech/Learning-Management-System.git
-```
+    ```
+    git clone https://github.com/DevStrikerTech/Learning-Management-System.git
+    ```
 
 2. **Backend Setup**:
 
@@ -72,10 +71,9 @@ git clone https://github.com/DevStrikerTech/Learning-Management-System.git
 2. Develop the feature, committing atomic changes.
 
 3. Ensure tests pass:
-
-```
-npm test
-```
+    ```
+    npm test
+    ```
 
 4. Create a Pull Request and get feedback.
 
