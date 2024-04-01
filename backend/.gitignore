@@ -1,5 +1,4 @@
 lms
 .env
 
-.coverage
 htmlcov
