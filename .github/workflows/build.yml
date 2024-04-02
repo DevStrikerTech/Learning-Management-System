@@ -33,8 +33,12 @@ jobs:
         with:
           path: ./.venv
           key: venv-${{ hashFiles('poetry.lock') }}
-      - name: Install the project dependencies
-        run: poetry install
+      - name: Install project dependencies
+        run: |
+          python -m pip install --upgrade pip
+          cd backend
+          pip install poetry
+          poetry install
       - name: Run the automated tests
         run: |
           poetry run coverage run manage.py test
