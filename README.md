@@ -1,4 +1,4 @@
-[![atl-text-8](https://img.shields.io/badge/Version-4.2.7-blueviolet?logo=Django&style=flat)](https://www.djangoproject.com/) [![atl-text-1](https://img.shields.io/badge/Version-18-blue?logo=React&style=flat)](https://react.dev/) [![atl-text-2](https://img.shields.io/badge/Version-3.10.12-red?logo=Python&style=flat)](https://www.python.org/) ![atl-text-6](https://img.shields.io/badge/license-GPL-lightgrey) ![atl-text-7](https://img.shields.io/badge/coverage-83-green) [![LMS Build](https://github.com/DevStrikerTech/Learning-Management-System/actions/workflows/build.yml/badge.svg)](https://github.com/DevStrikerTech/Learning-Management-System/actions/workflows/build.yml)
+[![atl-text-8](https://img.shields.io/badge/Version-4.2.7-blueviolet?logo=Django&style=flat)](https://www.djangoproject.com/) [![atl-text-1](https://img.shields.io/badge/Version-18-blue?logo=React&style=flat)](https://react.dev/) [![atl-text-2](https://img.shields.io/badge/Version-3.10-red?logo=Python&style=flat)](https://www.python.org/) ![atl-text-6](https://img.shields.io/badge/license-GPL-lightgrey) ![atl-text-7](https://img.shields.io/badge/coverage-83-green) [![LMS Build](https://github.com/DevStrikerTech/Learning-Management-System/actions/workflows/build.yml/badge.svg)](https://github.com/DevStrikerTech/Learning-Management-System/actions/workflows/build.yml)
 
 # Learning Management System (LMS)
 
@@ -35,9 +35,13 @@ The Learning Management System (LMS) is a web application that facilitates onlin
 
 - Navigate to the `backend` directory.
 - Install dependencies:
+
   ```
-  pip install -r requirements.txt
+  pip install poetry
+
+  poetry install
   ```
+
 - Set up the database:
   ```
   python manage.py migrate
