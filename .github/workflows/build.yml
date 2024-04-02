@@ -14,14 +14,12 @@ on:
 #     - cron: '*/15 * * * *'
 
 jobs:
-  ci:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Install Python
         uses: actions/setup-python@v4
-        # see details (matrix, python-version, python-version-file, etc.)
-        # https://github.com/actions/setup-python
       - name: Install poetry
         uses: abatilo/actions-poetry@v2
       - name: Setup a local virtual environment (if no poetry.toml file)
@@ -41,5 +39,6 @@ jobs:
           poetry install
       - name: Run the automated tests
         run: |
+          cd backend
           poetry run coverage run manage.py test
           poetry run coverage report
