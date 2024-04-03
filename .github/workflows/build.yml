@@ -20,7 +20,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Set DJANGO_SETTINGS_MODULE
-        run: echo "DJANGO_SETTINGS_MODULE=myproject.settings" >> ${{ env.MAILGUN_API_KEY }}
+        run: echo "DJANGO_SETTINGS_MODULE=myproject.settings" >> ${{ vars.MAILGUN_API_KEY }}
       - name: Install Python
         uses: actions/setup-python@v4
       - name: Install poetry
