@@ -56,17 +56,17 @@ The Learning Management System (LMS) is a web application that facilitates onlin
 - Navigate to the `frontend` directory.
 - Install dependencies:
   ```
-  npm install
+  yarn install
   ```
 - Start the frontend application locally:
   ```
-  npm start
+  yarn dev
   ```
 
 4. **Access the Application**:
 
 - Backend: http://localhost:8000
-- Frontend: http://localhost:3000
+- Frontend: http://localhost:5173
 
 ## Development Flow
 
@@ -78,7 +78,7 @@ The Learning Management System (LMS) is a web application that facilitates onlin
 3. Ensure tests pass:
 
    ```
-   npm test
+   yarn run test
    ```
 
 4. Create a Pull Request and get feedback.
