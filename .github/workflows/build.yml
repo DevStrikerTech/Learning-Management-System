@@ -19,10 +19,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Use the secret key
-        run: echo "My secret key is ${{ secrets.MAILGUN_API_KEY }}"
-      - name: Set environment variable
-        run: echo "MAILGUN_API_KEY=${{ secrets.MAILGUN_API_KEY }}"
+      - name: Set DJANGO_SETTINGS_MODULE
+        run: echo "DJANGO_SETTINGS_MODULE=myproject.settings" >> ${{ secrets.MAILGUN_API_KEY }}
       - name: Install Python
         uses: actions/setup-python@v4
       - name: Install poetry
