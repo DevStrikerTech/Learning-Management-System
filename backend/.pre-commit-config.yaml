@@ -7,7 +7,7 @@ repos:
       - id: trailing-whitespace
 
       - id: end-of-file-fixer
-        exclude: README.md
+        exclude: ^frontend/
 
       - id: check-yaml
         exclude: .pre-commit-config.yaml
