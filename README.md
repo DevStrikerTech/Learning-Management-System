@@ -38,17 +38,21 @@ The Learning Management System (LMS) is a web application that facilitates onlin
 
   ```
   pip install poetry
-
   poetry install
   ```
 
 - Set up the database:
   ```
-  python manage.py migrate
+  poetry run python manage.py migrate
   ```
 - Run the development server:
   ```
-  python manage.py runserver
+  poetry run python manage.py runserver
+  ```
+  Run the tests:
+  ```
+  poetry run coverage run manage.py test
+  poetry run coverage report
   ```
 
 3. **Frontend Setup**:

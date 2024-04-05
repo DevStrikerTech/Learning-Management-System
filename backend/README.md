@@ -14,7 +14,12 @@ Welcome to the Learning Management System (LMS) backend repository! This open-so
 1. Clone this repository.
 2. Install the required dependencies (`pip install poetry` `poetry install`).
 3. Set up your database and configure settings (e.g., database connection, secret key).
-4. Run the development server: `python manage.py runserver`.
+4. Run the development server: `poetry run python manage.py runserver`.
+5. Set up .env file: 
+   (`FROM_EMAIL=<email-id>` 
+    `MAILGUN_API_KEY=<add-api-key>` 
+    `MAILGUN_SENDER_DOMAIN=<add-domain-url>`
+   ).
 
 ## Contributing
 

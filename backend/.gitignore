@@ -1,4 +1,18 @@
-lms
-.env
+# Byte-compiled / optimized / DLL files
+__pycache__/
 
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Django stuff:
+db.sqlite3
+
+# Unit test / coverage reports
+.coverage
 htmlcov
