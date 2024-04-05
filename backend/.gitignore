@@ -10,6 +10,9 @@ ENV/
 env.bak/
 venv.bak/
 
+# Django stuff:
+db.sqlite3
+
 # Unit test / coverage reports
 .coverage
 htmlcov
