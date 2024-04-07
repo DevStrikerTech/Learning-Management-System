@@ -1,4 +1,4 @@
-name: LMS Frontdend Build
+name: LMS Frontend Build
 
 on:
   push:
@@ -15,24 +15,24 @@ on:
 
 jobs:
   frontend-build:
-  runs-on: ubuntu-latest
-  steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v2
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
 
-    - name: Install Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: "12"
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "12"
 
-    - name: Cache Dependencies
-      uses: actions/cache@v2
-      with:
-        path: "**/node_modules"
-        key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+      - name: Cache Dependencies
+        uses: actions/cache@v2
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
 
-    - name: Install Dependencies
-      run: yarn install
+      - name: Install Dependencies
+        run: yarn install
 
-    - name: Run Unit Tests
-      run: yarn test
+      - name: Run Unit Tests
+        run: yarn test
