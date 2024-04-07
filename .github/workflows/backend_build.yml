@@ -1,4 +1,4 @@
-name: LMS Backend Build
+name: LMS Build
 
 on:
   push:
@@ -14,7 +14,7 @@ on:
 #     - cron: '*/15 * * * *'
 
 jobs:
-  backend-build:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -54,3 +54,27 @@ jobs:
           cd backend
           poetry run coverage run manage.py test
           poetry run coverage report
+
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "18"
+
+      - name: Cache Dependencies
+        uses: actions/cache@v2
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Install Dependencies
+        run: |
+          cd frontend
+          yarn install
+
+      - name: Run Unit Tests
+        run: |
+          cd frontend
+          yarn test
