@@ -32,7 +32,11 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
 
       - name: Install Dependencies
-        run: yarn install
+        run: |
+          cd frontend
+          yarn install
 
       - name: Run Unit Tests
-        run: yarn test
+        run: |
+          cd frontend
+          yarn test
