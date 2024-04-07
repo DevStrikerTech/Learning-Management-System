@@ -1,4 +1,4 @@
-name: LMS Build
+name: LMS Backend Build
 
 on:
   push:
@@ -14,20 +14,24 @@ on:
 #     - cron: '*/15 * * * *'
 
 jobs:
-  build:
+  backend-build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
       - name: Set environment variables
         run: |
           echo "MAILGUN_API_KEY=${{ secrets.MAILGUN_API_KEY }}" >> $GITHUB_ENV
           echo "MAILGUN_SENDER_DOMAIN=${{ secrets.MAILGUN_SENDER_DOMAIN }}" >> $GITHUB_ENV
           echo "FROM_EMAIL=${{ secrets.FROM_EMAIL }}" >> $GITHUB_ENV
+
       - name: Install Python
         uses: actions/setup-python@v4
+
       - name: Install poetry
         uses: abatilo/actions-poetry@v2
+
       - name: Setup a local virtual environment (if no poetry.toml file)
         run: |
           poetry config virtualenvs.create true --local
@@ -37,12 +41,14 @@ jobs:
         with:
           path: ./.venv
           key: venv-${{ hashFiles('poetry.lock') }}
+
       - name: Install project dependencies
         run: |
           python -m pip install --upgrade pip
           cd backend
           pip install poetry
           poetry install
+
       - name: Run the automated tests
         run: |
           cd backend
