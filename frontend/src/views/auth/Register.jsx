@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Toast from "../plugin/Toast";
 import { Link, useNavigate } from "react-router-dom";
 
 import BaseHeader from "../partials/BaseHeader";
@@ -15,7 +16,7 @@ function Register() {
 
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
     setIsLoadingState(true);
 
@@ -26,11 +27,17 @@ function Register() {
       userPasswordMatched
     );
     if (error) {
-      alert(error);
+      Toast().fire({
+        icon: "warning",
+        text: error,
+      });
       setIsLoadingState(false);
     } else {
       navigate("/");
-      alert("Registration Successfull, you have now been logged in");
+      Toast().fire({
+        icon: "success",
+        title: "Registration Successfull, you have now been logged in",
+      });
       setIsLoadingState(false);
     }
   };
@@ -60,7 +67,7 @@ function Register() {
                 <form
                   className="needs-validation"
                   noValidate=""
-                  onSubmit={handleSubmit}
+                  onSubmit={handleRegister}
                 >
                   {/* Username */}
                   <div className="mb-3">
@@ -113,7 +120,7 @@ function Register() {
                     </label>
                     <input
                       type="password"
-                      id="password"
+                      id="passwordMatched"
                       className="form-control"
                       name="password"
                       placeholder="**************"
@@ -127,7 +134,7 @@ function Register() {
                         <button
                           disabled
                           type="submit"
-                          className="btn btn-primary"
+                          className="btn btn-danger"
                         >
                           Processing <i className="fas fa-spinner fa-spin"></i>
                         </button>

@@ -5,61 +5,121 @@ import jwt_decode from "jwt-decode";
 import { useAuthStore } from "../store/auth";
 
 /**
- * Logs in a user with the provided email and password.
+ * Attempts to log in a user with the provided credentials.
  *
- * @param {string} userEmail - The user's email address.
- * @param {string} userPassword - The user's password.
- * @returns {Promise<{ data: any, error: string | null }>} - The login result.
+ * @param {string} email - The user's email address.
+ * @param {string} password - The user's password.
+ * @returns {Promise<{ response: Object | null, error: string | null }>}
+ * An object containing the login response data or an error message.
  */
-export const userLogin = async (userEmail, userPassword) => {
+export const userLogin = async (email, password) => {
+  // Define a mapping of field names to their display names
+  const fieldDisplayNames = {
+    email: "Email Address",
+    password: "Password",
+  };
+
   try {
     const { data, status } = await axios.post(`user/token/`, {
-      userEmail,
-      userPassword,
+      email,
+      password,
     });
 
     if (status === 200) {
       setAuthUser(data.access, data.refresh);
+      return { response: data, error: null };
+    }
+  } catch (error) {
+    let errorMessages = [];
+
+    // Handle non-200 status within the catch block
+    if (error.response) {
+      if (error.response.status !== 200 && error.response.data?.detail) {
+        return { response: null, error: error.response.data.detail };
+      }
+
+      if (typeof error.response.data === "object") {
+        for (const [field, messages] of Object.entries(error.response.data)) {
+          if (Array.isArray(messages)) {
+            const displayName = fieldDisplayNames[field] || field;
+            errorMessages.push(
+              ...messages.map((message) => `${displayName}: ${message}`)
+            );
+          }
+        }
+      }
     }
 
-    return { data, error: null };
-  } catch (error) {
-    return {
-      data: null,
-      error: "Invalid email or password provided!",
-    };
+    const errorResponse =
+      errorMessages.length > 0
+        ? errorMessages.join("\n")
+        : "Oops! Something went wrong, please try again.";
+
+    return { response: null, error: errorResponse };
   }
 };
 
 /**
- * Registers a user with the provided information.
+ * Asynchronously registers a new user with the provided credentials.
  *
- * @param {string} userFullName - The user's full name.
- * @param {string} userEmail - The user's email address.
- * @param {string} userPassword - The user's password.
- * @param {string} userPasswordMatched - The confirmation of the user's password.
- * @returns {Promise<{ data: any, error: string | null }>} - The registration result.
+ * @param {Object} params - The user registration parameters.
+ * @param {string} params.fullName - The full name of the user.
+ * @param {string} params.email - The email address of the user.
+ * @param {string} params.password - The password for the user's account.
+ * @param {string} params.confirmPassword - The confirmation of the user's password, must match the password.
+ * @returns {Promise<Object>} A promise that resolves to an object containing either the registration response data or an error message.
+ * @throws {Error} Throws an error if the registration process fails at any point.
  */
 export const userRegister = async (
-  userFullName,
-  userEmail,
-  userPassword,
-  userPasswordMatched
+  full_name,
+  email,
+  password,
+  password_matched
 ) => {
+  // Define a mapping of field names to their replacements
+  const fieldReplacements = {
+    full_name: "Full Name",
+    email: "Email Address",
+    password: "Password",
+    password_matched: "Confirm Password",
+  };
+
   try {
     const { data } = await axios.post(`user/register/`, {
-      userFullName,
-      userEmail,
-      userPassword,
-      userPasswordMatched,
+      full_name,
+      email,
+      password,
+      password_matched,
     });
 
-    await login(userEmail, userPassword);
+    await userLogin(email, password);
     return { data, error: null };
   } catch (error) {
+    let errorMessages = [];
+
+    if (error.response && Array.isArray(error.response.data)) {
+      errorMessages = error.response.data.map(
+        (message, index) => `Error ${index + 1}: ${message}`
+      );
+    } else if (error.response && typeof error.response.data === "object") {
+      for (const [field, messages] of Object.entries(error.response.data)) {
+        if (Array.isArray(messages)) {
+          const displayName = fieldReplacements[field] || field;
+          errorMessages.push(
+            ...messages.map((message) => `${displayName}: ${message}`)
+          );
+        }
+      }
+    }
+
+    const errorResponse =
+      errorMessages.length > 0
+        ? errorMessages.join("\n")
+        : "Oops! Something went wrong, please try again.";
+
     return {
       data: null,
-      error: "Account already exists!",
+      error: errorResponse,
     };
   }
 };

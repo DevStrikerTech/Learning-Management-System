@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import Toast from "../plugin/Toast";
 import { Link, useNavigate } from "react-router-dom";
 
 import BaseHeader from "../partials/BaseHeader";
@@ -13,13 +14,16 @@ function Login() {
 
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setIsLoadingState(true);
     const { error } = await userLogin(userEmail, userPassword);
     if (error) {
       setIsLoadingState(false);
-      alert(error);
+      Toast().fire({
+        icon: "warning",
+        text: error,
+      });
     } else {
       navigate("/");
       setIsLoadingState(false);
@@ -51,7 +55,7 @@ function Login() {
                 <form
                   className="needs-validation"
                   noValidate=""
-                  onSubmit={handleSubmit}
+                  onSubmit={handleLogin}
                 >
                   {/* Username */}
                   <div className="mb-3">
@@ -115,7 +119,7 @@ function Login() {
                         <button
                           disabled
                           type="submit"
-                          className="btn btn-primary"
+                          className="btn btn-danger"
                         >
                           Processing <i className="fas fa-spinner fa-spin"></i>
                         </button>

@@ -142,22 +142,6 @@ function BaseFooter() {
                 Phone:
                 <span className="text-dark fw-semibold">(+44) 123 456 789</span>
               </p>
-              <div className="d-flex">
-                <a href="#">
-                  <img
-                    src="../../assets/images/svg/appstore.svg"
-                    alt=""
-                    className="img-fluid"
-                  />
-                </a>
-                <a href="#" className="ms-2">
-                  <img
-                    src="../../assets/images/svg/playstore.svg"
-                    alt=""
-                    className="img-fluid"
-                  />
-                </a>
-              </div>
             </div>
           </div>
         </div>

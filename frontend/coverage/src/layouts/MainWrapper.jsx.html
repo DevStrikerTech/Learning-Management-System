@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/utils/useAxios.js</title>
+    <title>Code coverage report for src/layouts/MainWrapper.jsx</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,20 +19,20 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/utils</a> useAxios.js</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/layouts</a> MainWrapper.jsx</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">36.11% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>13/36</span>
+                <span class='fraction'>0/29</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/0</span>
+                <span class='fraction'>0/1</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">36.11% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>13/36</span>
+                <span class='fraction'>0/29</span>
             </div>
         
             
@@ -92,24 +92,7 @@
 <a name='L27'></a><a href='#L27'>27</a>
 <a name='L28'></a><a href='#L28'>28</a>
 <a name='L29'></a><a href='#L29'>29</a>
-<a name='L30'></a><a href='#L30'>30</a>
-<a name='L31'></a><a href='#L31'>31</a>
-<a name='L32'></a><a href='#L32'>32</a>
-<a name='L33'></a><a href='#L33'>33</a>
-<a name='L34'></a><a href='#L34'>34</a>
-<a name='L35'></a><a href='#L35'>35</a>
-<a name='L36'></a><a href='#L36'>36</a>
-<a name='L37'></a><a href='#L37'>37</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<a name='L30'></a><a href='#L30'>30</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -133,44 +116,40 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import axios from "axios";
-import Cookies from "js-cookie";
-&nbsp;
-import { API_BASE_URL } from "./constants";
-import { getRefreshedToken, isAccessTokenExpired, setAuthUser } from "./auth";
-&nbsp;
-/**
- * Custom hook to create an Axios instance with authentication headers.
- * @returns {AxiosInstance} The configured Axios instance.
- */
-const useAxios = <span class="fstat-no" title="function not covered" >() =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >  const accessToken = Cookies.get("access_token");</span>
-<span class="cstat-no" title="statement not covered" >  const refreshToken = Cookies.get("refresh_token");</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >import { useEffect, useState } from "react";</span></span></span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >  const axiosInstance = axios.create({</span>
-<span class="cstat-no" title="statement not covered" >    baseURL: API_BASE_URL,</span>
-<span class="cstat-no" title="statement not covered" >    headers: { Authorization: `Bearer ${accessToken}` },</span>
-<span class="cstat-no" title="statement not covered" >  });</span>
+<span class="cstat-no" title="statement not covered" >import { setUser } from "../utils/auth";</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >  axiosInstance.interceptors.request.use(async (req) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    if (!isAccessTokenExpired) {</span>
-<span class="cstat-no" title="statement not covered" >      return req;</span>
-<span class="cstat-no" title="statement not covered" >    }</span>
+<span class="cstat-no" title="statement not covered" >/**</span>
+<span class="cstat-no" title="statement not covered" > * Custom hook to wrap components with a loading state.</span>
+<span class="cstat-no" title="statement not covered" > * @param {Object} props - The component props.</span>
+<span class="cstat-no" title="statement not covered" > * @param {ReactNode} props.children - The child components to render.</span>
+<span class="cstat-no" title="statement not covered" > * @returns {ReactNode} The wrapped components.</span>
+<span class="cstat-no" title="statement not covered" > */</span>
+<span class="cstat-no" title="statement not covered" >const MainWrapper = ({ children }) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >  const [loadingState, setLoadingState] = useState(true);</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >    const response = await getRefreshedToken(refreshToken);</span>
+<span class="cstat-no" title="statement not covered" >  useEffect(() =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    const handler = async () =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      setLoadingState(true);</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >    setAuthUser(response.access, response.refresh);</span>
-<span class="cstat-no" title="statement not covered" >    req.headers.Authorization = `Bearer ${response.data?.access}`;</span>
+<span class="cstat-no" title="statement not covered" >      await setUser();</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >    return req;</span>
-<span class="cstat-no" title="statement not covered" >  });</span>
+<span class="cstat-no" title="statement not covered" >      setLoadingState(false);</span>
+<span class="cstat-no" title="statement not covered" >    };</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >  return axiosInstance;</span>
+<span class="cstat-no" title="statement not covered" >    handler();</span>
+<span class="cstat-no" title="statement not covered" >  }, []);</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >  return &lt;&gt;{loadingState ? null : children}&lt;/&gt;;</span>
 <span class="cstat-no" title="statement not covered" >};</span>
-&nbsp;
-export default useAxios;
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >export default MainWrapper;</span>
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
