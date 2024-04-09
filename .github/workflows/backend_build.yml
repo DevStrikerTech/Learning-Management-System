@@ -19,15 +19,19 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
       - name: Set environment variables
         run: |
           echo "MAILGUN_API_KEY=${{ secrets.MAILGUN_API_KEY }}" >> $GITHUB_ENV
           echo "MAILGUN_SENDER_DOMAIN=${{ secrets.MAILGUN_SENDER_DOMAIN }}" >> $GITHUB_ENV
           echo "FROM_EMAIL=${{ secrets.FROM_EMAIL }}" >> $GITHUB_ENV
+
       - name: Install Python
         uses: actions/setup-python@v4
+
       - name: Install poetry
         uses: abatilo/actions-poetry@v2
+
       - name: Setup a local virtual environment (if no poetry.toml file)
         run: |
           poetry config virtualenvs.create true --local
@@ -37,14 +41,40 @@ jobs:
         with:
           path: ./.venv
           key: venv-${{ hashFiles('poetry.lock') }}
+
       - name: Install project dependencies
         run: |
           python -m pip install --upgrade pip
           cd backend
           pip install poetry
           poetry install
+
       - name: Run the automated tests
         run: |
           cd backend
           poetry run coverage run manage.py test
           poetry run coverage report
+
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "18"
+
+      - name: Cache Dependencies
+        uses: actions/cache@v2
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Install Dependencies
+        run: |
+          cd frontend
+          yarn install
+
+      - name: Run Unit Tests
+        run: |
+          cd frontend
+          yarn test
