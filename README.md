@@ -21,7 +21,7 @@ The Learning Management System (LMS) is a web application that facilitates onlin
 - **Redux**: For state management.
 - **SASS**: Used for styling components.
 - **Vite**: Bundles frontend assets.
-- **PostgreSQL**: As the database.
+- **PostgreSQL**: Powerful relational database management system.
 
 ## Getting Started
 
