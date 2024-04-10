@@ -20,7 +20,7 @@ The Learning Management System (LMS) is a web application that facilitates onlin
 - **React Router**: For client-side routing.
 - **Redux**: For state management.
 - **SASS**: Used for styling components.
-- **Webpack**: Bundles frontend assets.
+- **Vite**: Bundles frontend assets.
 - **PostgreSQL**: As the database.
 
 ## Getting Started
