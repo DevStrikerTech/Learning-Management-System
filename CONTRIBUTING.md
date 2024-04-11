@@ -12,4 +12,4 @@ The goal of this file is to help the larger community settle on some best practi
 - Keep your pull request focused on one issue.
 - Describe the goal of the changes.
 - Mention specific developers for review.
-- Make code readable and include comments.
+- Make code readable and include code comments.
