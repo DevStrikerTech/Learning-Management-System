@@ -95,4 +95,4 @@ Contributions are welcome! Please follow the guidelines in CONTRIBUTING.md.
 
 ## License
 
-This project is licensed under the GPL-3.0 License. See LICENSE for details.
+This project is licensed under the GPL-3.0 License. See [LICENSE](LICENSE) for details.
