@@ -2,7 +2,7 @@
 
 # Learning Management System (LMS)
 
-The Learning Management System (LMS) is a web application that facilitates online learning, course management, and student engagement. It combines the power of **Django** for backend development and **React.js** for frontend user interfaces.
+The Learning Management System (LMS) is a web application that facilitates online learning, managing courses, and student engagement. It combines the power of **Django** for backend development and **React.js** for frontend user interfaces.
 
 ## Features
 
