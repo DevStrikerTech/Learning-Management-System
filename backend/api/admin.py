@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from api import models 
+from api import models
 
 admin.site.register(models.Teacher)
 admin.site.register(models.Category)
