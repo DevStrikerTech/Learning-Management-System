@@ -7,7 +7,6 @@ from shortuuid.django_fields import ShortUUIDField
 
 from userauths.models import User, Profile
 
-
 LANGUAGE = (
     ("English", "English"),
     ("Spanish", "Spanish"),
