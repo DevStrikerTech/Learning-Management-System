@@ -7,6 +7,7 @@ from shortuuid.django_fields import ShortUUIDField
 
 from userauths.models import User, Profile
 
+
 LANGUAGE = (
     ("English", "English"),
     ("Spanish", "Spanish"),
@@ -56,6 +57,7 @@ NOTIFICATION_TYPE = (
     ("Course Enrollment Completed", "Course Enrollment Completed"),
 )
 
+
 class Teacher(models.Model):
     """
     Represents a teacher profile.
@@ -78,8 +80,11 @@ class Teacher(models.Model):
         courses(): Returns a queryset of courses taught by this teacher.
         review(): Returns the count of courses reviewed by students for this teacher.
     """
+
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    image = models.FileField(upload_to="course-file", blank=True, null=True, default="default.jpg")
+    image = models.FileField(
+        upload_to="course-file", blank=True, null=True, default="default.jpg"
+    )
     full_name = models.CharField(max_length=100)
     bio = models.CharField(max_length=100, null=True, blank=True)
     about = models.TextField(null=True, blank=True)
@@ -91,16 +96,17 @@ class Teacher(models.Model):
 
     def __str__(self):
         return self.full_name
-    
+
     def students(self):
         return CartOrderItem.objects.filter(teacher=self)
-    
+
     def courses(self):
         return Course.objects.filter(teacher=self)
-    
+
     def review(self):
         return Course.objects.filter(teacher=self).count()
-    
+
+
 class Category(models.Model):
     """
     Represents a category for courses.
@@ -127,26 +133,30 @@ class Category(models.Model):
         category = Category(title="Programming", active=True)
         category.save()
     """
+
     title = models.CharField(max_length=100)
-    image = models.FileField(upload_to="course-file", default="category.jpg", null=True, blank=True)
+    image = models.FileField(
+        upload_to="course-file", default="category.jpg", null=True, blank=True
+    )
     active = models.BooleanField(default=True)
     slug = models.SlugField(unique=True, null=True, blank=True)
 
     class Meta:
         verbose_name_plural = "Category"
-        ordering = ['title']
+        ordering = ["title"]
 
     def __str__(self):
         return self.title
-    
+
     def course_count(self):
         return Course.objects.filter(category=self).count()
-    
+
     def save(self, *args, **kwargs):
         if self.slug == "" or self.slug == None:
-            self.slug = slugify(self.title) 
-        
+            self.slug = slugify(self.title)
+
         super(Category, self).save(*args, **kwargs)
+
 
 class Course(models.Model):
     """
@@ -185,7 +195,10 @@ class Course(models.Model):
         rating_count(): Returns the total count of reviews/ratings for this course.
         reviews(): Returns a queryset of reviews for this course.
     """
-    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)
+
+    category = models.ForeignKey(
+        Category, on_delete=models.SET_NULL, null=True, blank=True
+    )
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     file = models.FileField(upload_to="course-file", blank=True, null=True)
     image = models.FileField(upload_to="course-file", blank=True, null=True)
@@ -194,16 +207,22 @@ class Course(models.Model):
     price = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
     language = models.CharField(choices=LANGUAGE, default="English", max_length=100)
     level = models.CharField(choices=LEVEL, default="Beginner", max_length=100)
-    platform_status = models.CharField(choices=PLATFORM_STATUS, default="Published", max_length=100)
-    teacher_course_status = models.CharField(choices=TEACHER_STATUS, default="Published", max_length=100)
+    platform_status = models.CharField(
+        choices=PLATFORM_STATUS, default="Published", max_length=100
+    )
+    teacher_course_status = models.CharField(
+        choices=TEACHER_STATUS, default="Published", max_length=100
+    )
     featured = models.BooleanField(default=False)
-    course_id = ShortUUIDField(unique=True, length=6, max_length=20, alphabet="1234567890")
+    course_id = ShortUUIDField(
+        unique=True, length=6, max_length=20, alphabet="1234567890"
+    )
     slug = models.SlugField(unique=True, null=True, blank=True)
     date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.title
-    
+
     def save(self, *args, **kwargs):
         if self.slug == "" or self.slug == None:
             self.slug = slugify(self.title) + str(self.pk)
@@ -211,22 +230,25 @@ class Course(models.Model):
 
     def students(self):
         return EnrolledCourse.objects.filter(course=self)
-    
+
     def curriculum(self):
         return Variant.objects.filter(course=self)
-    
+
     def lectures(self):
         return VariantItem.objects.filter(variant__course=self)
-    
+
     def average_rating(self):
-        average_rating = Review.objects.filter(course=self, active=True).aggregate(avg_rating=models.Avg('rating'))
-        return average_rating['avg_rating']
-    
+        average_rating = Review.objects.filter(course=self, active=True).aggregate(
+            avg_rating=models.Avg("rating")
+        )
+        return average_rating["avg_rating"]
+
     def rating_count(self):
         return Review.objects.filter(course=self, active=True).count()
-    
+
     def reviews(self):
         return Review.objects.filter(course=self, active=True)
+
 
 class Variant(models.Model):
     """
@@ -246,19 +268,23 @@ class Variant(models.Model):
         variant_items(): Returns a queryset of related variant items.
         items(): Alias for variant_items().
     """
+
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     title = models.CharField(max_length=1000)
-    variant_id = ShortUUIDField(unique=True, length=6, max_length=20, alphabet="1234567890")
+    variant_id = ShortUUIDField(
+        unique=True, length=6, max_length=20, alphabet="1234567890"
+    )
     date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.title
-    
+
     def variant_items(self):
         return VariantItem.objects.filter(variant=self)
-    
+
     def items(self):
         return VariantItem.objects.filter(variant=self)
+
 
 class VariantItem(models.Model):
     """
@@ -282,19 +308,24 @@ class VariantItem(models.Model):
         __str__(): Returns a formatted string with the variant title and item title.
         save(*args, **kwargs): Overrides the default save method to calculate and store content duration.
     """
-    variant = models.ForeignKey(Variant, on_delete=models.CASCADE, related_name="variant_items")
+
+    variant = models.ForeignKey(
+        Variant, on_delete=models.CASCADE, related_name="variant_items"
+    )
     title = models.CharField(max_length=1000)
     description = models.TextField(null=True, blank=True)
     file = models.FileField(upload_to="course-file", null=True, blank=True)
     duration = models.DurationField(null=True, blank=True)
     content_duration = models.CharField(max_length=1000, null=True, blank=True)
     preview = models.BooleanField(default=False)
-    variant_item_id = ShortUUIDField(unique=True, length=6, max_length=20, alphabet="1234567890")
+    variant_item_id = ShortUUIDField(
+        unique=True, length=6, max_length=20, alphabet="1234567890"
+    )
     date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return f"{self.variant.title} - {self.title}"
-    
+
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
 
@@ -302,15 +333,16 @@ class VariantItem(models.Model):
             clip = VideoFileClip(self.file.path)
             duration_seconds = clip.duration
 
-            minutes, remainder = divmod(duration_seconds, 60)  
+            minutes, remainder = divmod(duration_seconds, 60)
 
             minutes = math.floor(minutes)
             seconds = math.floor(remainder)
 
             duration_text = f"{minutes}m {seconds}s"
             self.content_duration = duration_text
-            
-            super().save(update_fields=['content_duration'])
+
+            super().save(update_fields=["content_duration"])
+
 
 class QuestionAnswer(models.Model):
     """
@@ -334,24 +366,28 @@ class QuestionAnswer(models.Model):
     Meta:
         ordering = ['-date']
     """
+
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     title = models.CharField(max_length=1000, null=True, blank=True)
-    question_answer_id = ShortUUIDField(unique=True, length=6, max_length=20, alphabet="1234567890")
+    question_answer_id = ShortUUIDField(
+        unique=True, length=6, max_length=20, alphabet="1234567890"
+    )
     date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return f"{self.user.username} - {self.course.title}"
-    
+
     class Meta:
-        ordering = ['-date']
+        ordering = ["-date"]
 
     def messages(self):
         return QuestionAnswerMessage.objects.filter(question=self)
-    
+
     def profile(self):
         return Profile.objects.get(user=self.user)
-    
+
+
 class QuestionAnswerMessage(models.Model):
     """
     Represents a message within a question-answer pair related to a course.
@@ -375,22 +411,28 @@ class QuestionAnswerMessage(models.Model):
     Meta:
         ordering = ['date']
     """
+
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     question = models.ForeignKey(QuestionAnswer, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     message = models.TextField(null=True, blank=True)
-    question_answer_message_id = ShortUUIDField(unique=True, length=6, max_length=20, alphabet="1234567890")
-    question_answer_id = ShortUUIDField(unique=True, length=6, max_length=20, alphabet="1234567890")
+    question_answer_message_id = ShortUUIDField(
+        unique=True, length=6, max_length=20, alphabet="1234567890"
+    )
+    question_answer_id = ShortUUIDField(
+        unique=True, length=6, max_length=20, alphabet="1234567890"
+    )
     date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return f"{self.user.username} - {self.course.title}"
-    
+
     class Meta:
-        ordering = ['date']
+        ordering = ["date"]
 
     def profile(self):
         return Profile.objects.get(user=self.user)
+
 
 class Cart(models.Model):
     """
@@ -412,6 +454,7 @@ class Cart(models.Model):
     Methods:
         __str__(): Returns the title of the associated course.
     """
+
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     price = models.DecimalField(max_digits=12, default=0.00, decimal_places=2)
@@ -423,7 +466,8 @@ class Cart(models.Model):
 
     def __str__(self):
         return self.course.title
-    
+
+
 class CartOrder(models.Model):
     """
     Represents an order for course items in a user's cart.
@@ -455,6 +499,7 @@ class CartOrder(models.Model):
     Meta:
         ordering = ['-date']
     """
+
     student = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     teachers = models.ManyToManyField(Teacher, blank=True)
     sub_total = models.DecimalField(max_digits=12, default=0.00, decimal_places=2)
@@ -462,24 +507,29 @@ class CartOrder(models.Model):
     total = models.DecimalField(max_digits=12, default=0.00, decimal_places=2)
     initial_total = models.DecimalField(max_digits=12, default=0.00, decimal_places=2)
     saved = models.DecimalField(max_digits=12, default=0.00, decimal_places=2)
-    payment_status = models.CharField(choices=PAYMENT_STATUS, default="Processing", max_length=100)
+    payment_status = models.CharField(
+        choices=PAYMENT_STATUS, default="Processing", max_length=100
+    )
     full_name = models.CharField(max_length=100, null=True, blank=True)
     email = models.CharField(max_length=100, null=True, blank=True)
     country = models.CharField(max_length=100, null=True, blank=True)
     coupons = models.ManyToManyField("api.Coupon", blank=True)
     stripe_session_id = models.CharField(max_length=1000, null=True, blank=True)
-    order_id = ShortUUIDField(unique=True, length=6, max_length=20, alphabet="1234567890")
+    order_id = ShortUUIDField(
+        unique=True, length=6, max_length=20, alphabet="1234567890"
+    )
     date = models.DateTimeField(default=timezone.now)
 
     class Meta:
-        ordering = ['-date']
-    
+        ordering = ["-date"]
+
     def order_items(self):
         return CartOrderItem.objects.filter(order=self)
-    
+
     def __str__(self):
         return self.order_id
-   
+
+
 class CartOrderItem(models.Model):
     """
     Represents an item within a cart order for purchasing courses.
@@ -509,8 +559,13 @@ class CartOrderItem(models.Model):
     Meta:
         ordering = ['-date']
     """
-    order = models.ForeignKey(CartOrder, on_delete=models.CASCADE, related_name="orderitem")
-    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="order_item")
+
+    order = models.ForeignKey(
+        CartOrder, on_delete=models.CASCADE, related_name="orderitem"
+    )
+    course = models.ForeignKey(
+        Course, on_delete=models.CASCADE, related_name="order_item"
+    )
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     price = models.DecimalField(max_digits=12, default=0.00, decimal_places=2)
     tax_fee = models.DecimalField(max_digits=12, default=0.00, decimal_places=2)
@@ -519,21 +574,24 @@ class CartOrderItem(models.Model):
     saved = models.DecimalField(max_digits=12, default=0.00, decimal_places=2)
     coupons = models.ManyToManyField("api.Coupon", blank=True)
     applied_coupon = models.BooleanField(default=False)
-    order_id = ShortUUIDField(unique=True, length=6, max_length=20, alphabet="1234567890")
+    order_id = ShortUUIDField(
+        unique=True, length=6, max_length=20, alphabet="1234567890"
+    )
     date = models.DateTimeField(default=timezone.now)
 
     class Meta:
-        ordering = ['-date']
-    
+        ordering = ["-date"]
+
     def order_id(self):
         return f"Order ID #{self.order.order_id}"
-    
+
     def payment_status(self):
         return f"{self.order.payment_status}"
-    
+
     def __str__(self):
         return self.order_id
-    
+
+
 class Certificate(models.Model):
     """
     Represents a certificate awarded to a user upon course completion.
@@ -550,13 +608,17 @@ class Certificate(models.Model):
     Methods:
         __str__(): Returns the title of the associated course.
     """
+
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
-    certificate_id = ShortUUIDField(unique=True, length=6, max_length=20, alphabet="1234567890")
+    certificate_id = ShortUUIDField(
+        unique=True, length=6, max_length=20, alphabet="1234567890"
+    )
     date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.course.title
+
 
 class CompletedLesson(models.Model):
     """
@@ -574,6 +636,7 @@ class CompletedLesson(models.Model):
     Methods:
         __str__(): Returns the title of the associated course.
     """
+
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     variant_item = models.ForeignKey(VariantItem, on_delete=models.CASCADE)
@@ -581,6 +644,7 @@ class CompletedLesson(models.Model):
 
     def __str__(self):
         return self.course.title
+
 
 class EnrolledCourse(models.Model):
     """
@@ -606,33 +670,39 @@ class EnrolledCourse(models.Model):
         question_answer(): Returns a queryset of question-answer pairs related to the course.
         review(): Returns the first review associated with the course and user.
     """
+
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
-    teacher = models.ForeignKey(Teacher, on_delete=models.SET_NULL, null=True, blank=True)
+    teacher = models.ForeignKey(
+        Teacher, on_delete=models.SET_NULL, null=True, blank=True
+    )
     order_item = models.ForeignKey(CartOrderItem, on_delete=models.CASCADE)
-    enrollment_id = ShortUUIDField(unique=True, length=6, max_length=20, alphabet="1234567890")
+    enrollment_id = ShortUUIDField(
+        unique=True, length=6, max_length=20, alphabet="1234567890"
+    )
     date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.course.title
-    
+
     def lectures(self):
         return VariantItem.objects.filter(variant__course=self.course)
-    
+
     def completed_lesson(self):
         return CompletedLesson.objects.filter(course=self.course, user=self.user)
-    
+
     def curriculum(self):
         return Variant.objects.filter(course=self.course)
-    
+
     def note(self):
         return Note.objects.filter(course=self.course, user=self.user)
-    
+
     def question_answer(self):
         return QuestionAnswer.objects.filter(course=self.course)
-    
+
     def review(self):
         return Review.objects.filter(course=self.course, user=self.user).first()
+
 
 class Note(models.Model):
     """
@@ -652,16 +722,20 @@ class Note(models.Model):
     Methods:
         __str__(): Returns the title of the note.
     """
+
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     title = models.CharField(max_length=1000, null=True, blank=True)
     note = models.TextField()
-    note_id = ShortUUIDField(unique=True, length=6, max_length=20, alphabet="1234567890")
-    date = models.DateTimeField(default=timezone.now)   
+    note_id = ShortUUIDField(
+        unique=True, length=6, max_length=20, alphabet="1234567890"
+    )
+    date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.title
-    
+
+
 class Review(models.Model):
     """
     Represents a user's review for a course.
@@ -682,19 +756,21 @@ class Review(models.Model):
         __str__(): Returns the title of the associated course.
         profile(): Returns the user's profile associated with the review.
     """
+
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     review = models.TextField()
     rating = models.IntegerField(choices=RATING, default=None)
     reply = models.CharField(null=True, blank=True, max_length=1000)
     active = models.BooleanField(default=False)
-    date = models.DateTimeField(default=timezone.now)   
+    date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.course.title
-    
+
     def profile(self):
         return Profile.objects.get(user=self.user)
+
 
 class Notification(models.Model):
     """
@@ -716,17 +792,25 @@ class Notification(models.Model):
     Methods:
         __str__(): Returns the type of the notification.
     """
+
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
-    teacher = models.ForeignKey(Teacher, on_delete=models.SET_NULL, null=True, blank=True)
-    order = models.ForeignKey(CartOrder, on_delete=models.SET_NULL, null=True, blank=True)
-    order_item = models.ForeignKey(CartOrderItem, on_delete=models.SET_NULL, null=True, blank=True)
+    teacher = models.ForeignKey(
+        Teacher, on_delete=models.SET_NULL, null=True, blank=True
+    )
+    order = models.ForeignKey(
+        CartOrder, on_delete=models.SET_NULL, null=True, blank=True
+    )
+    order_item = models.ForeignKey(
+        CartOrderItem, on_delete=models.SET_NULL, null=True, blank=True
+    )
     review = models.ForeignKey(Review, on_delete=models.SET_NULL, null=True, blank=True)
     type = models.CharField(max_length=100, choices=NOTIFICATION_TYPE)
     seen = models.BooleanField(default=False)
-    date = models.DateTimeField(default=timezone.now)  
+    date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.type
+
 
 class Coupon(models.Model):
     """
@@ -746,15 +830,19 @@ class Coupon(models.Model):
     Methods:
         __str__(): Returns the coupon code.
     """
-    teacher = models.ForeignKey(Teacher, on_delete=models.SET_NULL, null=True, blank=True)
+
+    teacher = models.ForeignKey(
+        Teacher, on_delete=models.SET_NULL, null=True, blank=True
+    )
     used_by = models.ManyToManyField(User, blank=True)
     code = models.CharField(max_length=50)
     discount = models.IntegerField(default=1)
     active = models.BooleanField(default=False)
-    date = models.DateTimeField(default=timezone.now)   
+    date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.code
+
 
 class Wishlist(models.Model):
     """
@@ -766,15 +854,17 @@ class Wishlist(models.Model):
     Attributes:
         user (ForeignKey): A foreign key to the user who added the course to the wishlist (nullable).
         course (ForeignKey): A foreign key to the associated course.
-        
+
     Methods:
         __str__(): Returns the title of the associated course.
     """
+
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    
+
     def __str__(self):
         return str(self.course.title)
+
 
 class Country(models.Model):
     """
@@ -792,6 +882,7 @@ class Country(models.Model):
         __str__(): Returns the name of the country.
 
     """
+
     name = models.CharField(max_length=100)
     tax_rate = models.IntegerField(default=5)
     active = models.BooleanField(default=True)
