@@ -91,7 +91,7 @@ The Learning Management System (LMS) is a web application that facilitates onlin
 
 ## Contributing
 
-Contributions are welcome! Please follow the guidelines in CONTRIBUTING.md.
+Contributions are more than welcome! Please follow the guidelines in CONTRIBUTING.md.
 
 ## License
 
