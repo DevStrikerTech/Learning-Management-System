@@ -5,7 +5,7 @@ from userauths.models import User, Profile
 
 
 class ApiModelTest(TestCase):
-    """Test cases for Teacher, Category, Course, Variant, VariantItem, QuestionAnswer, QuestionAnswerMessage, Cart, CartOrder, CartOrderItem, Certificate models."""
+    """Test cases for Teacher, Category, Course, Variant, VariantItem, QuestionAnswer, QuestionAnswerMessage, Cart, CartOrder, CartOrderItem, Certificate, CompletedLesson, EnrolledCourse, Note, Review, Notification, Coupon, Wishlist and Country models."""
 
     def test_create_teacher_with_required_fields(self):
         """Test creating a new Teacher instance with all required fields should be successful."""
@@ -325,40 +325,144 @@ class ApiModelTest(TestCase):
         assert certificate.course == course
         assert certificate.user == user
 
-    # def test_valid_completed_lesson_creation(self):
-    #     """Test creating a CompletedLesson object with valid course, user, and variant_item should create a new instance of CompletedLesson."""
-    #     user = User.objects.create(email="test@example.com", username="test")
-    #     teacher = models.Teacher.objects.create(user=user, full_name="Jane Smith")
-    #     course = models.Course.objects.create(
-    #         teacher=teacher,
-    #         title="Python Programming",
-    #         price=50.00,
-    #         language="English",
-    #         level="Beginner",
-    #         platform_status="Published",
-    #         teacher_course_status="Published",
-    #         featured=True,
-    #         course_id=1,
-    #     )
-    #     variant_item = models.VariantItem.objects.create(
-    #         title="Test Variant Item",
-    #         description=None,
-    #         file=None,
-    #         duration=None,
-    #         content_duration=None,
-    #         preview=False,
-    #         variant_item_id=1,
-    #         variant_id=1,
-    #         date="1990-01-01 00:00:00",
-    #     )
+    def test_valid_completed_lesson_creation(self):
+        """Test creating a CompletedLesson object with valid course, user, and variant_item should create a new instance of CompletedLesson."""
+        user = User.objects.create(email="test@example.com", username="test")
+        teacher = models.Teacher.objects.create(user=user, full_name="Jane Smith")
+        course = models.Course.objects.create(
+            teacher=teacher,
+            title="Python Programming",
+            price=50.00,
+            language="English",
+            level="Beginner",
+            platform_status="Published",
+            teacher_course_status="Published",
+            featured=True,
+            course_id=1,
+        )
+        variant = models.Variant.objects.create(course=course, title="Test Variant")
+        variant_item = models.VariantItem.objects.create(
+            variant=variant, title="Test Item"
+        )
 
-    #     completed_lesson = models.CompletedLesson(
-    #         course=course, user=user, variant_item=variant_item
-    #     )
+        completed_lesson = models.CompletedLesson(
+            course=course, user=user, variant_item=variant_item
+        )
 
-    #     completed_lesson.save()
+        completed_lesson.save()
 
-    #     assert isinstance(completed_lesson, models.CompletedLesson)
-    #     assert completed_lesson.course == course
-    #     assert completed_lesson.user == user
-    #     assert completed_lesson.variant_item == variant_item
+        assert isinstance(completed_lesson, models.CompletedLesson)
+        assert completed_lesson.course == course
+        assert completed_lesson.user == user
+        assert completed_lesson.variant_item == variant_item
+
+    def test_create_note_with_required_fields(self):
+        """Test creating a note with all required fields should save successfully."""
+        user = User.objects.create(email="test@example.com", username="testuser")
+        teacher = models.Teacher.objects.create(user=user, full_name="Jane Smith")
+        course = models.Course.objects.create(
+            teacher=teacher,
+            title="Python Programming",
+            price=50.00,
+            language="English",
+            level="Beginner",
+            platform_status="Published",
+            teacher_course_status="Published",
+            featured=True,
+            course_id=1,
+        )
+
+        note = models.Note(user=user, course=course, note="This is a test note")
+
+        note.save()
+
+        assert note.id is not None
+        assert note.user == user
+        assert note.course == course
+        assert note.title is None
+        assert note.note == "This is a test note"
+        assert note.date is not None
+
+    def test_create_review_with_required_fields(self):
+        """Test creating a review with all required fields should save successfully."""
+        user = User.objects.create(email="test@example.com", username="testuser")
+        teacher = models.Teacher.objects.create(user=user, full_name="Jane Smith")
+        course = models.Course.objects.create(
+            teacher=teacher,
+            title="Python Programming",
+            price=50.00,
+            language="English",
+            level="Beginner",
+            platform_status="Published",
+            teacher_course_status="Published",
+            featured=True,
+            course_id=1,
+        )
+
+        review = models.Review(
+            user=user,
+            course=course,
+            review="This course is amazing! I learned so much.",
+            rating=5,
+            reply="Thank you for your feedback!",
+            active=True,
+        )
+
+        review.save()
+
+        assert review.id is not None
+        assert review.user == user
+        assert review.course == course
+        assert review.review == "This course is amazing! I learned so much."
+        assert review.rating == 5
+        assert review.reply == "Thank you for your feedback!"
+        assert review.active is True
+
+    def test_notification_creation_with_required_fields(self):
+        """Test notification object can be created with required fields"""
+        user = User.objects.create(email="test@example.com", username="testuser")
+
+        notification = models.Notification(user=user, type="New Order")
+
+        notification.save()
+
+        assert notification.user == user
+        assert notification.type == "New Order"
+        assert notification.seen == False
+
+    def test_create_coupon_with_valid_data(self):
+        """Test creating a new coupon with valid data should save it to the database and return the coupon code."""
+        coupon = models.Coupon.objects.create(code="ABC123", discount=10, active=True)
+
+        assert coupon.code == "ABC123"
+        assert coupon.discount == 10
+        assert coupon.active is True
+        assert models.Coupon.objects.filter(code="ABC123").exists()
+
+    def test_valid_wishlist_instance(self):
+        """Test creating a Wishlist object with a user and a course should return a valid Wishlist instance."""
+        user = User.objects.create(email="test@example.com", username="testuser")
+        teacher = models.Teacher.objects.create(user=user, full_name="Jane Smith")
+        course = models.Course.objects.create(
+            teacher=teacher,
+            title="Python Programming",
+            price=50.00,
+            language="English",
+            level="Beginner",
+            platform_status="Published",
+            teacher_course_status="Published",
+            featured=True,
+            course_id=1,
+        )
+
+        wishlist = models.Wishlist(user=user, course=course)
+
+        wishlist.save()
+
+        assert isinstance(wishlist, models.Wishlist)
+
+    def test_valid_country_object(self):
+        """Test creating a new Country object with valid name, tax_rate, and active values should return a valid instance of the Country class."""
+        country = models.Country(name="UK", tax_rate=10, active=True)
+
+        assert isinstance(country, models.Country)
