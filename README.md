@@ -2,7 +2,7 @@
 
 # Learning Management System (LMS)
 
-The Learning Management System (LMS) is a web application that facilitates online learning, course management, and student engagement. It combines the power of **Django** for backend development and **React.js** for frontend user interfaces.
+The Learning Management System (LMS) is a web application that facilitates online learning, managing courses, and student engagement. It combines the power of **Django** for backend development and **React.js** for frontend user interfaces.
 
 ## Features
 
@@ -20,8 +20,8 @@ The Learning Management System (LMS) is a web application that facilitates onlin
 - **React Router**: For client-side routing.
 - **Redux**: For state management.
 - **SASS**: Used for styling components.
-- **Webpack**: Bundles frontend assets.
-- **PostgreSQL**: As the database.
+- **Vite**: Bundles frontend assets.
+- **PostgreSQL**: Powerful relational database management system.
 
 ## Getting Started
 
@@ -91,8 +91,8 @@ The Learning Management System (LMS) is a web application that facilitates onlin
 
 ## Contributing
 
-Contributions are welcome! Please follow the guidelines in CONTRIBUTING.md.
+Contributions are more than welcome! Please follow the guidelines in CONTRIBUTING.md.
 
 ## License
 
-This project is licensed under the GPL-3.0 License. See LICENSE for details.
+This project is licensed under the GPL-3.0 License. See [LICENSE](LICENSE) for details.
