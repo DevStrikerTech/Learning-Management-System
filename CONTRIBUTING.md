@@ -1,4 +1,4 @@
-# Description:
+# Description of the project:
 The goal of this file is to help the larger community settle on some best practices when it comes to contributing. This is an open-source project, so community contributions are the only way this will truly develop. Any help you give is greatly appreciated, big or small.
 
 ## Issue Gardening:
