@@ -10,6 +10,6 @@ The goal of this file is to help the larger community settle on some best practi
 - When making a pull request, reference the issue number it addresses.
 - Use clear and succinct commit messages.
 - Keep your pull request focused on one issue.
-- Describe the goal of the changes.
+- Describe the goal of the changes in the project.
 - Mention specific developers for review.
 - Make code readable and include code comments.
