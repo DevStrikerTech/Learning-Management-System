@@ -1,10 +1,7 @@
+from django.conf import settings
 from django.shortcuts import render
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
-from django.conf import settings
-
-from api import serializer as api_serializer
-from userauths.models import User, Profile
 
 from rest_framework import generics, status
 from rest_framework.response import Response
@@ -13,6 +10,10 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 from random import randint
+
+from api import models as api_models
+from userauths.models import User, Profile
+from api import serializer as api_serializer
 
 
 class MyTokenObtainPairView(TokenObtainPairView):
@@ -131,3 +132,56 @@ class PasswordChangeAPIView(generics.CreateAPIView):
             return Response(
                 {"message": "User Does Not Exists"}, status=status.HTTP_404_NOT_FOUND
             )
+
+
+class CategoryListAPIView(generics.ListAPIView):
+    """
+    API view for listing categories.
+
+    Args:
+        generics (type): The base class for generic views.
+    """
+
+    queryset = api_models.Category.objects.filter(active=True)
+    serializer_class = api_serializer.CategorySerializer
+    permission_classes = [AllowAny]
+
+
+class CourseListAPIView(generics.ListAPIView):
+    """
+    API view for listing published courses.
+
+    Args:
+        generics (type): The base class for generic views.
+    """
+
+    queryset = api_models.Course.objects.filter(
+        platform_status="Published", teacher_course_status="Published"
+    )
+    serializer_class = api_serializer.CourseSerializer
+    permission_classes = [AllowAny]
+
+
+class CourseDetailAPIView(generics.RetrieveAPIView):
+    """
+    API view for retrieving details of a published course.
+
+    Args:
+        generics (type): The base class for generic views.
+
+    Returns:
+        type: The serialized course details.
+    """
+
+    serializer_class = api_serializer.CourseSerializer
+    permission_classes = [AllowAny]
+    queryset = api_models.Course.objects.filter(
+        platform_status="Published", teacher_course_status="Published"
+    )
+
+    def get_object(self):
+        slug = self.kwargs["slug"]
+        course = api_models.Course.objects.get(
+            slug=slug, platform_status="Published", teacher_course_status="Published"
+        )
+        return course
