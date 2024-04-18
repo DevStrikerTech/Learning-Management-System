@@ -18,4 +18,11 @@ urlpatterns = [
     path("course/category/", api_views.CategoryListAPIView.as_view()),
     path("course/course-list/", api_views.CourseListAPIView.as_view()),
     path("course/course-detail/<slug>/", api_views.CourseDetailAPIView.as_view()),
+    path("course/cart/", api_views.CartAPIView.as_view()),
+    path("course/cart-list/<cart_id>/", api_views.CartListAPIView.as_view()),
+    path(
+        "course/cart-item-delete/<cart_id>/<item_id>/",
+        api_views.CartItemDeleteAPIView.as_view(),
+    ),
+    path("cart/stats/<cart_id>/", api_views.CartStatsAPIView.as_view()),
 ]
