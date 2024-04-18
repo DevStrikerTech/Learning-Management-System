@@ -2,7 +2,7 @@ import React from "react";
 
 function BaseFooter() {
   return (
-    <footer className="pt-lg-8 pt-5 footer bg-dark text-white mt-5">
+    <footer className="pt-lg-8 pt-5 footer bg-danger text-white mt-5">
       <div className="container mt-lg-2">
         <div className="row">
           <div className="col-lg-4 col-md-6 col-12 text-white">
@@ -140,7 +140,9 @@ function BaseFooter() {
               </p>
               <p>
                 Phone:
-                <span className="text-dark fw-semibold">(+44) 123 456 789</span>
+                <span className="text-light fw-semibold">
+                  (+44) 123 456 789
+                </span>
               </p>
             </div>
           </div>

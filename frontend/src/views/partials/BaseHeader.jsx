@@ -22,7 +22,7 @@ function BaseHeader() {
     <div>
       <nav
         className="navbar navbar-expand-lg bg-body-tertiary"
-        data-bs-theme="dark"
+        data-bs-theme="light"
       >
         <div className="container">
           <Link className="navbar-brand" to="/">
@@ -176,7 +176,7 @@ function BaseHeader() {
               />
               <button
                 onClick={handleSearchSubmit}
-                className="btn btn-outline-success w-50"
+                className="btn btn-outline-light w-50"
                 type="submit"
               >
                 Search <i className="fas fa-search"></i>
